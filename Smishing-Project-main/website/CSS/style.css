@@ -1,0 +1,75 @@
+.login-btn {
+  background-color: #1877f2;
+  border: none;
+
+  width: 300px;
+}
+
+.login {
+  margin-bottom: 1rem;
+}
+.row {
+  text-align: center;
+}
+
+.create-btn {
+  margin-top: 2rem;
+  width: 300px;
+  margin-bottom: 100px;
+}
+
+.forgot-pass {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.facebook {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  width: 115px;
+  height: 25px;
+}
+
+.facebook-logo {
+  width: 75px;
+  height: 75px;
+  text-align: right;
+}
+
+.login-field {
+  background-color: #dbdbdb33;
+  height: 40px;
+}
+
+.create-field {
+  background-color: #dbdbdb33;
+  height: 40px;
+}
+
+.language {
+  text-align: center;
+  color: rgba(48, 48, 156, 0.541);
+}
+
+.footer-links {
+  color: rgb(143, 143, 143);
+}
+
+.header {
+  background-color: #1877f2;
+  padding-top: 25px;
+}
+
+.header-text {
+  text-align: left;
+  color: white;
+}
+
+.open {
+  color: #1877f2;
+  margin-top: 15px;
+
+  border-radius: 100px 100px 100px 100px;
+
+  text-align: center;
+}

